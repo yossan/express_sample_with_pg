@@ -1,8 +1,7 @@
 const express = require('express')
 const router = express.Router()
+const employees = require('./employees')
 
-router.get('/', function (req, res) {
-    res.send('Hi')
-})
+router.use('/', employees)
 
 module.exports = router
