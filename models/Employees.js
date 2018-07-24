@@ -17,7 +17,7 @@ module.exports.fetchAll = function () {
                 .catch((err) => {
                     release()
                     reject(err)
-                }
+                })
         })
     })
 }
