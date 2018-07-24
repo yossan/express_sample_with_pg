@@ -13,6 +13,9 @@ client.on('error', function (err) {
 })
 
 const app = express()
+app.set('views', './views')
+app.set('view engine', 'hbs')
+
 app.use('/', index)
 app.use('/employees', employees)
 
@@ -37,5 +40,3 @@ app.listen(port, function (err) {
     }
     console.log('starts listening on ' + port)
 })
-
-
