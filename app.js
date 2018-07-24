@@ -1,21 +1,26 @@
 const dotenv   = require('dotenv').config()
-
 const express  = require('express')
 const {Client} = require('pg')
+
 const index     = require('./routes/index')
 const employees = require('./routes/employees')
 
+/*
 const client = new Client()
 client.connect()
 client.on('error', function (err) {
     console.log('db error: ' + err)
     exit(1)
 })
+*/
 
 const app = express()
+
+// Set template engine
 app.set('views', './views')
 app.set('view engine', 'hbs')
 
+// Add middlewares
 app.use('/', index)
 app.use('/employees', employees)
 
@@ -32,6 +37,7 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500).send('Sorry! Error occurs')
 })
 
+// Listen
 const port = process.env.PORT
 app.listen(port, function (err) {
     if (err) {

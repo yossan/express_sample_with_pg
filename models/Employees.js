@@ -1,25 +1,15 @@
-const {Pool} = require('pg')
+const pool = require('./pgpool')
 
 module.exports.fetchAll = function () {
-    const pool = new Pool()
-    return new Promise((resolve, reject) => {
-        pool.connect((err, client, release) => {
-            if (err) {
-                throw err
-            }
-
-            client
-                .query('SELECT * FROM employees')
-                .then((ret) => {
-                    release()
-                    resolve(ret.rows)
-                })
-                .catch((err) => {
-                    release()
-                    reject(err)
-                })
-        })
+    return new Promise( async (resolve, reject) => {
+        const client = await pool.connect()
+        try {
+            const res = await client.query('SELECT * FROM employees')
+            resolve(res.rows)
+        } catch (e) {
+            reject(e)
+        } finally {
+            client.release()
+        }
     })
 }
-
-
