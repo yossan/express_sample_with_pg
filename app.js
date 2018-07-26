@@ -1,9 +1,11 @@
 const dotenv   = require('dotenv').config()
 const express  = require('express')
+const bodyParser = require('body-parser')
 const {Client} = require('pg')
 
 const index     = require('./routes/index')
 const employees = require('./routes/employees')
+const search    = require('./routes/search')
 
 /*
 const client = new Client()
@@ -16,6 +18,10 @@ client.on('error', function (err) {
 
 const app = express()
 
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
+
 // Set template engine
 app.set('views', './views')
 app.set('view engine', 'hbs')
@@ -23,6 +29,7 @@ app.set('view engine', 'hbs')
 // Add middlewares
 app.use('/', index)
 app.use('/employees', employees)
+app.use('/search', search)
 
 // Catch 404
 app.use(function(req, res, next) {
